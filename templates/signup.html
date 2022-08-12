@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}SignUp{% endblock title %}
+{% block nav %} 
+<nav>
+    <div class="nav-left">
+        <img src="/static/images/logo.png" alt="Logo" class="logo">
+    </div>
+    <div class="nav-right">
+        <a href="login/"><button type="link" class="btn btn-secondary">Login</button></a>
+    </div>
+</nav>
+{% endblock nav %}
+{% block body %}
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">UserName</label>
+            <input type="text" class="form-control" name="username" id="username">       
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" name="email" id="email">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password" id="password">
+        </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" id="confirm_password">
+        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock body %}

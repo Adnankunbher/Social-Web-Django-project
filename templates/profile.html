@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block body %}
+{% load static %}
+<div class="profile">
+        <form class="row g-3" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div class="col-md-6">
+                        <label for="Image" class="form-label">Profile Image</label>
+                        <img src="{{user_profile.profileimage.url}}" width="100" height="100" />
+                        <input type="file" name="image" class="form-control" id="Image"
+                                value="{{user_profile.profileimage}}">
+                </div>
+                <div class="col-12">
+                        <label for="bio" class="form-label"">Bio</label>
+                <textarea name=" bio" id="bio" cols="30" rows="10">{{user_profile.bio}}</textarea>
+                </div>
+                <div class="col-md-4">
+                        <label for="inputState" class="form-label">State</label>
+                        <select id="inputState" class="form-select" name="location">
+                                {%if user_profile.location%}
+                                <option selected>{{user_profile.location}}</option>
+                                {%else%}
+                                <option selected>Choose Your Country</option>
+                                <option>Pakistan</option>
+                                <option>India</option>
+                                <option>Afghanistan</option>
+                                <option>Australia</option>
+                                <option>Albana</option>
+                                <option>USA</option>
+                                <option>UK</option>
+                                {%endif%}
+                        </select>
+                </div>
+                <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+        </form>
+</div>
+{% endblock body %}

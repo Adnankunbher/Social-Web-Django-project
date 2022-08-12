@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+{%if user.is_authenticated%}
+<div class="container">
+        <!-- Left Sidebar -->
+        <div class="left-sidebar">
+            <!-- Important links -->
+            <div class="imp-links">
+                <a href="#"><img src="/static/images/news.png">Latest News</a>
+                <a href="#"><img src="/static/images/friends.png">Friends</a>
+                <a href="#"><img src="/static/images/group.png">Groups</a>
+                <a href="#"><img src="/static/images/marketplace.png">MarketPlace</a>
+                <a href="#"><img src="/static/images/watch.png">Watch</a>
+                <a href="">See More</a>
+            </div>
+            <div class="shortcut-links">
+                <p>Your Shortcuts</p>
+                <a href="#"><img src="/static/images/shortcut-1.png">Web Developer</a>
+                <a href="#"><img src="/static/images/shortcut-2.png">Web Designer</a>
+                <a href="#"><img src="/static/images/shortcut-3.png">Full Stack Developer</a>
+                <a href="#"><img src="/static/images/shortcut-4.png">Graphic Designer</a>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="story-gallery">
+                <div class="story story1">
+                    <img src="/static/images/upload.png" alt="">
+                    <p>Post Story</p>
+                </div>
+                <div class="story story2">
+                    <img src="/static/images/member-1.png" alt="">
+                    <p>Alisia</p>
+                </div>
+                <div class="story story3">
+                    <img src="/static/images/member-2.png" alt="">
+                    <p>Jordan</p>
+                </div>
+                <div class="story story4">
+                    <img src="/static/images/member-3.png" alt="">
+                    <p>Rustam</p>
+                </div>
+                <div class="story story5">
+                    <img src="/static/images/member-4.png" alt="">
+                    <p>Jackson</p>
+                </div>
+            </div>
+
+            <div class="write-post-container">
+                <div class="user-profile">
+                    <a href="#"><img src="{{user_profile.profileimage.url}}"></a>
+                    <div>
+                        <p>{{user.username}}</p>
+                        <small>public <i class="fa-solid fa-caret-down"></i></small>
+                    </div>
+                </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="post-input-character">
+                        <textarea rows="3" name="captions" placeholder="What's on your mind, John?"></textarea>
+                        <div class="add-post-links">
+                            <div class="md3">
+                                <input type="file" name="img" aria-describedby="upload">
+                            </div>
+                            
+                        <a href="/accounts/home"><button class="btn btn-outline-primary" type="submit">Upload</button></a>
+                </form>
+                        <!-- <a href="" type="file"><img src="/static/images/live-video.png"></a>
+                        <a href="#"><img src="/static/images/photo.png">Photo/Video</a>
+                        <a href="#"><img src="/static/images/feeling.png">Feeling/Activity</a> -->
+                    </div>
+                </div>
+            </div>
+            {% for i in posts %}
+            <div class="post-container">
+                <div class="post-row">
+                    <div class="user-profile">
+                        <img src="{{user_profile.profileimage.url}}">
+                        <div>
+                            <p>{{i.username}}</p>
+                            <span>{{i.published_date}}</span>
+                        </div>
+                    </div>
+                    <a href=""><i class="fa-solid fa-ellipsis-v"></i></a>
+                </div>
+                <p class="post-text">{{i.captions}} </p>
+                <img src="{{i.image.url}}" class="post-img">
+                <div class="post-row">
+                    <div class="activity-icons">
+                        <div><img src="/static/images/like-blue.png"> 120</div>
+                        <div><img src="/static/images/comments.png"> 21</div>
+                        <div><img src="/static/images/share.png"> 30</div>
+                        {% if request.user == i.user %}
+                            <a href={{i.id}}><button class="btn btn-danger mx-4">delete</button></a>
+                        {% endif %}
+                    </div>
+                    <div class="post-profile-icon">
+                        <img src="{{user_profile.profileimage.url}}"> <i class="fa-solid fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            {% comment %} <div class="post-container">
+                <div class="post-row">
+                    <div class="user-profile">
+                        <img src="/static/images/profile-pic.png">
+                        <div>
+                            <p>{{user.username}}</p>
+                            <span>12 June 2022, 8:56 pm</span>
+                        </div>
+                    </div>
+                    <a href="#"><i class="fa-solid fa-ellipsis-v"></i></a>
+                </div>
+                <p class="post-text">Social Web is my first Social website.I will learn from Youtube and practice it.Hopfully you like it and give us thumbs up. </p>
+                <img src="/static/images/feed-image-2.png" class="post-img">
+                <div class="post-row">
+                    <div class="activity-icons">
+                        <div><img src="/static/images/like.png"> 10</div>
+                        <div><img src="/static/images/comments.png"> 2</div>
+                        <div><img src="/static/images/share.png"> 3</div>
+                    </div>
+                    <div class="post-profile-icon">
+                        <img src="/static/images/profile-pic.png"> <i class="fa-solid fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-container">
+                <div class="post-row">
+                    <div class="user-profile">
+                        <img src="/static/images/profile-pic.png">
+                        <div>
+                            <p>{{user.username}}</p>
+                            <span>12 June 2022, 8:56 pm</span>
+                        </div>
+                    </div>
+                    <a href="#"><i class="fa-solid fa-ellipsis-v"></i></a>
+                </div>
+                <p class="post-text">Social Web is my first Social website.I will learn from Youtube and practice it.Hopfully you like it and give us thumbs up. </p>
+                <img src="/static/images/feed-image-3.png" class="post-img">
+                <div class="post-row">
+                    <div class="activity-icons">
+                        <div><img src="/static/images/like.png"> 30</div>
+                        <div><img src="/static/images/comments.png"> 11</div>
+                        <div><img src="/static/images/share.png"> 4</div>
+                    </div>
+                    <div class="post-profile-icon">
+                        <img src="/static/images/profile-pic.png"> <i class="fa-solid fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="post-container">
+                <div class="post-row">
+                    <div class="user-profile">
+                        <img src="/static/images/profile-pic.png">
+                        <div>
+                            <p>{{user.username}}</p>
+                            <span>12 June 2022, 8:56 pm</span>
+                        </div>
+                    </div>
+                    <a href="#"><i class="fa-solid fa-ellipsis-v"></i></a>
+                </div>
+                <p class="post-text">Social Web is my first Social website.I will learn from Youtube and practice it.Hopfully you like it and give us thumbs up. </p>
+                <img src="/static/images/feed-image-4.png" class="post-img">
+                <div class="post-row">
+                    <div class="activity-icons">
+                        <div><img src="/static/images/like.png"> 1</div>
+                        <div><img src="/static/images/comments.png"> 2</div>
+                        <div><img src="/static/images/share.png"> 5</div>
+                    </div>
+                    <div class="post-profile-icon">
+                        <img src="/static/images/profile-pic.png"> <i class="fa-solid fa-caret-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="post-container">
+                <div class="post-row">
+                    <div class="user-profile">
+                        <img src="/static/images/profile-pic.png">
+                        <div>
+                            <p>{{user.username}}</p>
+                            <span>12 June 2022, 8:56 pm</span>
+                        </div>
+                    </div>
+                    <a href="#"><i class="fa-solid fa-ellipsis-v"></i></a>
+                </div>
+                <p class="post-text">Social Web is my first Social website.I will learn from Youtube and practice it.Hopfully you like it and give us thumbs up. </p>
+                <img src="/static/images/feed-image-5.png" class="post-img">
+                <div class="post-row">
+                    <div class="activity-icons">
+                        <div><img src="/static/images/like.png"> 20</div>
+                        <div><img src="/static/images/comments.png"> 1</div>
+                        <div><img src="/static/images/share.png"> 3</div>
+                    </div>
+                    <div class="post-profile-icon">
+                        <img src="/static/images/profile-pic.png"> <i class="fa-solid fa-caret-down"></i>
+                    </div>
+                </div>
+            </div> {% endcomment %}
+            <button type="button" class="load-more">Load More</button>
+
+        </div>
+
+        <div class="right-sidebar">
+            <div class="sidebar-title">
+                <h4>Events</h4>
+                <a href="#">See More</a>
+            </div>
+            <div class="events">
+                <div class="left-events">
+                    <h4>18</h4>
+                    <span>March</span>
+                </div>
+                <div class="right-events">
+                    <h4>Social Media</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> Willision Tech Park</p>
+                    <a href="#">More info</a>
+                </div>
+            </div>
+            <div class="events">
+                <div class="left-events">
+                    <h4>20</h4>
+                    <span>August</span>
+                </div>
+                <div class="right-events">
+                    <h4>Mobile Marketing</h4>
+                    <p><i class="fa-solid fa-location-dot"></i> Willision Tech Park</p>
+                    <a href="#">More info</a>
+                </div>
+            </div>
+            <!-- Advertisement -->
+            <div class="sidebar-title">
+                <h4>Advertisement</h4>
+                <a href="#">close</a>
+            </div>
+            <img src="/static/images/advertisement.png" class="ads-banners">
+            <!-- Conversation -->
+            <div class="sidebar-title">
+                <h4>Conversation</h4>
+                <a href="#">Hide Chat</a>
+            </div>
+            <div class="onlinelist">
+                <div class="online">
+                    <img src="/static/images/member-1.png">
+                </div>
+                <p>Alisia Nim</p>
+            </div>
+            <div class="onlinelist">
+                <div class="online">
+                    <img src="/static/images/member-2.png">
+                </div>
+                <p>Chris Jordan</p>
+            </div>
+            <div class="onlinelist">
+                <div class="online">
+                    <img src="/static/images/member-3.png">
+                </div>
+                <p>Rustam AK</p>
+            </div>
+        </div>
+    </div>
+<div class="footer">
+    <p>Copyright 2022 - Adnan Ali Kunbher </p>
+</div>
+</body>
+{% endif %}
+{% endblock body %}
+</html>
